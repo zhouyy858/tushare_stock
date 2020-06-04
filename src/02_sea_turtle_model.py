@@ -9,10 +9,10 @@ mpl.rcParams['font.sans-serif']=['SimHei']#设置字体
 mpl.rcParams['axes.unicode_minus']=False #显示中文
 
 
-#//（1）当今天的收盘价，大于过去20个交易日中的最高价时，以收盘价买入；  
+#（1）当今天的收盘价，大于过去20个交易日中的最高价时，以收盘价买入；  
 #（2）买入后，当收盘价小于过去10个交易日中的最低价时，以收盘价卖出。
 def run_strategy(data):
-    x1=data.close>data.up
+    x1=data.close>data.up#判断当天是否上涨
     x2=data.close.shift(1)<data.up.shift(1)
     x=x1&x2
     y1=data.close<data.down
@@ -33,5 +33,13 @@ def read_csv_data(data_path):
 
 if __name__ == "__main__":
     data = read_csv_data('../stock_data/000039.SZ.csv')
-    print(data)
+    #print(data[0:])
+    for i in range(len(data)):
+        run_strategy(data[i:i+1])
+        #print(data[i:i+1])
+    # for sline in data[1::]:
+    #     print(sline)
+    #     run_strategy(sline)
+
+    # print(data)
 
